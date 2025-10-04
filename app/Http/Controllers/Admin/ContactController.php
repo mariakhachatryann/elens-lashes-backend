@@ -36,7 +36,13 @@ class ContactController extends Controller
             'phone' => 'nullable|string|max:255',
             'social_links' => 'nullable|array',
             'social_links.*' => 'nullable|url',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
+
+        if ($request->hasFile('logo')) {
+            $logoPath = $request->file('logo')->store('logos', 'public');
+            $validated['logo'] = $logoPath;
+        }
 
         $this->contactService->createContact($validated);
 
@@ -63,7 +69,13 @@ class ContactController extends Controller
             'phone' => 'nullable|string|max:255',
             'social_links' => 'nullable|array',
             'social_links.*' => 'nullable|url',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
+
+        if ($request->hasFile('logo')) {
+            $logoPath = $request->file('logo')->store('logos', 'public');
+            $validated['logo'] = $logoPath;
+        }
 
         $updatedContact = $this->contactService->updateContact($contact->id, $validated);
 

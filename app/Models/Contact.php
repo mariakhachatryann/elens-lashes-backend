@@ -13,6 +13,7 @@ class Contact extends Model
         'address',
         'phone',
         'social_links',
+        'logo',
     ];
 
     protected $casts = [

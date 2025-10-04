@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->text('address')->nullable();
             $table->string('phone')->nullable();
-            $table->json('social_links')->nullable(); 
+            $table->json('social_links')->nullable();
+            $table->string('logo')->nullable();
             $table->timestamps();
         });
     }
