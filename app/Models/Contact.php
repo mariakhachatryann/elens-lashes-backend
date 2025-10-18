@@ -14,6 +14,7 @@ class Contact extends Model
         'phone',
         'social_links',
         'logo',
+        'book_link',
     ];
 
     protected $casts = [
