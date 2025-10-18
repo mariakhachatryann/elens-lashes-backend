@@ -37,6 +37,7 @@ class ContactController extends Controller
             'social_links' => 'nullable|array',
             'social_links.*' => 'nullable|url',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'book_link' => 'nullable|url|max:255',
         ]);
 
         if ($request->hasFile('logo')) {
@@ -70,6 +71,7 @@ class ContactController extends Controller
             'social_links' => 'nullable|array',
             'social_links.*' => 'nullable|url',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'book_link' => 'nullable|url|max:255',
         ]);
 
         if ($request->hasFile('logo')) {
