@@ -39,11 +39,11 @@ class ContactController extends Controller
             'social_links.*' => 'nullable|url',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'book_link' => 'nullable|url|max:255',
-            'map_url' => 'nullable|url|max:255',
+            'map_url' => 'nullable|string',
         ]);
 
         if ($request->hasFile('logo')) {
-            $logoPath = $request->file('logo')->store('logos', 'public');
+            $logoPath = $request->file('logo')->store('logos', 'public_direct');
             $validated['logo'] = $logoPath;
         }
 
@@ -75,11 +75,11 @@ class ContactController extends Controller
             'social_links.*' => 'nullable|url',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'book_link' => 'nullable|url|max:255',
-            'map_url' => 'nullable|url|max:255',
+            'map_url' => 'nullable|string',
         ]);
 
         if ($request->hasFile('logo')) {
-            $logoPath = $request->file('logo')->store('logos', 'public');
+            $logoPath = $request->file('logo')->store('logos', 'public_direct');
             $validated['logo'] = $logoPath;
         }
 

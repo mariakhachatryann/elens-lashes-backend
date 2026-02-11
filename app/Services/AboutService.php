@@ -19,11 +19,17 @@ class AboutService
             $about = new About();
         }
 
-        $about->fill([
-            'title' => $data['title'] ?? $about->title,
-            'description' => $data['description'] ?? $about->description,
-        ]);
+        if (isset($data['hero_image']) && $data['hero_image'] instanceof \Illuminate\Http\UploadedFile) {
+            if ($about->hero_image) {
+                try {
+                    \Illuminate\Support\Facades\Storage::disk('public_direct')->delete($about->hero_image);
+                } catch (\Throwable $e) {
+                }
+            }
+            $data['hero_image'] = $data['hero_image']->store('about', 'public_direct');
+        }
 
+        $about->fill($data);
         $about->save();
 
         return $about;

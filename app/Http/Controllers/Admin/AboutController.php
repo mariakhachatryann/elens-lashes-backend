@@ -29,7 +29,12 @@ class AboutController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'hero_image' => 'nullable|image|max:2048',
         ]);
+
+        if ($request->hasFile('hero_image')) {
+            $validated['hero_image'] = $request->file('hero_image');
+        }
 
         $this->aboutService->saveAbout($validated);
 
