@@ -29,6 +29,24 @@
                         </div>
                         Services
                     </a>
+                    <a href="{{ route('admin.team-members.index') }}" 
+                       class="flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors {{ request()->routeIs('admin.team-members.*') ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-500' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
+                        <div class="w-5 h-5 mr-3 flex-shrink-0 flex items-center justify-center">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a4 4 0 00-5-3.87M9 20H4v-2a4 4 0 015-3.87M12 12a4 4 0 100-8 4 4 0 000 8z" />
+                            </svg>
+                        </div>
+                        Team
+                    </a>
+                    <a href="{{ route('admin.about.index') }}" 
+                       class="flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors {{ request()->routeIs('admin.about.*') ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-500' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
+                        <div class="w-5 h-5 mr-3 flex-shrink-0 flex items-center justify-center">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7H7v10h10V9h-4z" />
+                            </svg>
+                        </div>
+                        About Us
+                    </a>
                     <a href="{{ route('admin.classes.index') }}" 
                        class="flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors {{ request()->routeIs('admin.classes.*') ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-500' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
                         <div class="w-5 h-5 mr-3 flex-shrink-0 flex items-center justify-center">

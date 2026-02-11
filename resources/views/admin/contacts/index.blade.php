@@ -15,8 +15,10 @@
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Logo</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Address</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Social Links</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Book Link</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Map URL</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                 </tr>
             </thead>
@@ -37,6 +39,9 @@
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         {{ $contact->phone }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {{ $contact->email ?? '—' }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         @if($contact->social_links)
@@ -62,8 +67,18 @@
                             <span class="text-gray-400">No book link</span>
                         @endif
                     </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        @if($contact->map_url)
+                            <a href="{{ $contact->map_url }}" target="_blank"
+                               class="text-blue-600 hover:text-blue-800 text-xs">
+                                {{ Str::limit($contact->map_url, 30) }}
+                            </a>
+                        @else
+                            <span class="text-gray-400">No map URL</span>
+                        @endif
+                    </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <button @click="openEditModal({{ $contact->id }}, @js($contact->address), @js($contact->phone), @js($contact->social_links), @js($contact->logo), @js($contact->book_link))"
+                        <button @click="openEditModal({{ $contact->id }}, @js($contact->address), @js($contact->phone), @js($contact->email), @js($contact->social_links), @js($contact->logo), @js($contact->book_link), @js($contact->map_url))"
                                 class="text-blue-600 hover:text-blue-900">Edit</button>
                     </td>
                 </tr>
@@ -133,6 +148,16 @@
                                 </div>
 
                                 <div class="mb-4">
+                                    <label for="edit-email" class="block text-sm font-medium text-gray-700 mb-1">
+                                        Email
+                                    </label>
+                                    <input type="email"
+                                           x-model="editForm.email"
+                                           id="edit-email"
+                                           class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+
+                                <div class="mb-4">
                                     <label for="edit-book-link" class="block text-sm font-medium text-gray-700 mb-1">
                                         Book Link
                                     </label>
@@ -141,6 +166,20 @@
                                            id="edit-book-link"
                                            placeholder="https://example.com/book"
                                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+
+                                <div class="mb-4">
+                                    <label for="edit-map-url" class="block text-sm font-medium text-gray-700 mb-1">
+                                        Google Maps URL
+                                    </label>
+                                    <input type="url"
+                                           x-model="editForm.map_url"
+                                           id="edit-map-url"
+                                           placeholder="https://www.google.com/maps/embed?..."
+                                           class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                    <p class="text-xs text-gray-500 mt-1">
+                                        Paste the Google Maps embed URL to show the map on the website.
+                                    </p>
                                 </div>
 
                                 <div class="mb-4">
@@ -226,18 +265,22 @@ function contactManager() {
             id: null,
             address: '',
             phone: '',
+            email: '',
             book_link: '',
+            map_url: '',
             social_links: [],
             logo: '',
             logoPreview: ''
         },
 
-        openEditModal(id, address, phone, socialLinks, logo, bookLink) {
+        openEditModal(id, address, phone, email, socialLinks, logo, bookLink, mapUrl) {
             this.editForm = {
                 id: id,
                 address: address || '',
                 phone: phone || '',
+                email: email || '',
                 book_link: bookLink || '',
+                map_url: mapUrl || '',
                 social_links: socialLinks ? Object.entries(socialLinks).map(([platform, url]) => ({ platform, url })) : [],
                 logo: logo || '',
                 logoPreview: ''
@@ -251,7 +294,9 @@ function contactManager() {
                 id: null,
                 address: '',
                 phone: '',
+                email: '',
                 book_link: '',
+                map_url: '',
                 social_links: [],
                 logo: '',
                 logoPreview: ''
@@ -296,7 +341,9 @@ function contactManager() {
                 formData.append('_method', 'PUT');
                 formData.append('address', this.editForm.address);
                 formData.append('phone', this.editForm.phone);
+                formData.append('email', this.editForm.email);
                 formData.append('book_link', this.editForm.book_link);
+                formData.append('map_url', this.editForm.map_url);
                 formData.append('social_links', JSON.stringify(socialLinksObj));
 
                 const logoFile = document.getElementById('edit-logo').files[0];

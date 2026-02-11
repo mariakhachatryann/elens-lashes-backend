@@ -12,9 +12,11 @@ class Contact extends Model
     protected $fillable = [
         'address',
         'phone',
+        'email',
         'social_links',
         'logo',
         'book_link',
+        'map_url',
     ];
 
     protected $casts = [
